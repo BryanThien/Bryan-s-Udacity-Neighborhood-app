@@ -40,7 +40,7 @@ class MapContainer extends Component {
                 name: location.name,
                 position: location.location,
                 url: location.url,
-                address: location.address
+                address: location.fullAddress
             };
             markerProps.push(mProps);
 
@@ -66,6 +66,7 @@ class MapContainer extends Component {
           height: '100vh'
         }
         const amProps = this.state.activeMarkerProps;
+        
         return (
         <div style={style}>
             <Map 
@@ -80,7 +81,9 @@ class MapContainer extends Component {
                 visible={this.state.showingInfoWindow}
                 onclose={this.state.closeInfoWindow}>
                 <div>
-                    <h3>{amProps && amProps.name}</h3>
+                    <h2>{amProps && amProps.name}</h2>
+                    <h4>{amProps && amProps.address}</h4>
+                    <h3><a href={amProps && amProps.url}>See Website</a></h3>
                 </div>
             </InfoWindow>
             </Map>
