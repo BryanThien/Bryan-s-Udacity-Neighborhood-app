@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import axios from 'axios';
 
 const map_key = 'AIzaSyCKnu3YbAv8wC4wOoZZvx8n4zSrvpxggjk';
+const fsClientId = 'K4XTXBKQ5I2AUZPYHSK1BUWR5KNVR0RCHE1AIVEZT1LPFX2S';
+const fsClientSecret = 'J5LE3UTJ0PQ1MIYW2YKV0DD2MULXKIF413Q1WZDLZ4W035PZ';
+const fsVersion = '20181216'
 
 class MapContainer extends Component {
     state = {
@@ -13,6 +17,11 @@ class MapContainer extends Component {
         showingInfoWindow: false
     };
 
+    componentDidMount() {
+    }
+
+
+// sets up map object and starts updateMarkers function to fill state with place data   
     mapReady = (props, map) => {
         this.setState({map});
         this.updateMarkers(this.props.locations);
@@ -23,8 +32,43 @@ class MapContainer extends Component {
         this.setState({showingInfoWindow: false, activeMarkerProps: null, activeMarker: null});
     }}
 
+    getBusinessInfo = (props, data) => {
+        return data
+            .response
+            .venues
+            .filter(item => item.name.includes(props.name) || props.name.includes(item.name));
+    }
+
+
     onMarkerClick = (props, marker, event) => {
+        // Closes any info windows open
         this.closeInfoWindow();
+        console.log(props.position.lat);
+        console.log(props.position.lng);
+        let url = `https://api.foursquare.com/v2/venues/search?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}&radius=100&ll=${props.position.lat},${props.position.lng}`
+        let headers = new Headers();
+        let request = new Request(url, {
+            method: 'GET',
+            headers
+        });
+        
+        let activeMarkerProps;
+        fetch(request)
+            .then(response => response.json())
+            .then(result => {
+                console.log(result);
+                let restaurant = this.getBusinessInfo(props, result);
+                activeMarkerProps = {
+                    ...props,
+                    foursquare: restaurant[0]
+                };
+
+                if (activeMarkerProps.foursquare) {
+                    console.log(restaurant[0].id);
+                }
+            })
+
+
         this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps: props});
     }
     
@@ -95,3 +139,4 @@ class MapContainer extends Component {
 export default GoogleApiWrapper({
     apiKey: map_key
 })(MapContainer)
+
