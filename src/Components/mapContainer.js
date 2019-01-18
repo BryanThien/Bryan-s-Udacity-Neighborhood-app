@@ -33,7 +33,9 @@ class MapContainer extends Component {
     }}
 
     getBusinessInfo = (props, data) => {
+        console.log(data.data.response.venues);
         return data
+            .data
             .response
             .venues
             .filter(item => item.name.includes(props.name) || props.name.includes(item.name));
@@ -43,28 +45,30 @@ class MapContainer extends Component {
     onMarkerClick = (props, marker, event) => {
         // Closes any info windows open
         this.closeInfoWindow();
-        console.log(props.position.lat);
-        console.log(props.position.lng);
-        let url = `https://api.foursquare.com/v2/venues/search?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}&radius=100&ll=${props.position.lat},${props.position.lng}`
-        let headers = new Headers();
-        let request = new Request(url, {
-            method: 'GET',
-            headers
-        });
         
         let activeMarkerProps;
-        fetch(request)
-            .then(response => response.json())
-            .then(result => {
+
+        axios.get(`https://api.foursquare.com/v2/venues/search?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}&radius=100&ll=${props.position.lat},${props.position.lng}`).then(result => {
                 console.log(result);
                 let restaurant = this.getBusinessInfo(props, result);
                 activeMarkerProps = {
                     ...props,
                     foursquare: restaurant[0]
                 };
-
+        console.log(activeMarkerProps.foursquare);
                 if (activeMarkerProps.foursquare) {
-                    console.log(restaurant[0].id);
+                    let url = `https://api.foursquare.com/v2/venues/${restaurant[0].id}/photos?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}`;
+                    axios.get(url)
+                        .then(result => {
+                            activeMarkerProps = {
+                                ...activeMarkerProps,
+                                images: result.data.response.photos
+                            };
+                            if (this.state.activeMarker)
+                                this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps})
+                        })
+                } else {
+                    this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps})
                 }
             })
 
@@ -128,6 +132,21 @@ class MapContainer extends Component {
                     <h2>{amProps && amProps.name}</h2>
                     <h4>{amProps && amProps.address}</h4>
                     <h3><a href={amProps && amProps.url}>See Website</a></h3>
+                    <div>
+                        <img
+                            alt={amProps && amProps.images ? amProps.name + " food picture" : ""}
+                            src={amProps && amProps.images ? amProps.images.items[0].prefix + "100x100" + amProps.images.items[0].suffix : ""}
+                        />
+                    </div>
+                    
+                    {/* (amProps && amProps.images
+                        ? (<div><img
+                            alt={amProps.name}
+                            src={amProps.images.items[0].prefix + "100x100" + amProps.images.items}
+                        />
+                    </div>
+                    ) : "" } */}
+                    
                 </div>
             </InfoWindow>
             </Map>
