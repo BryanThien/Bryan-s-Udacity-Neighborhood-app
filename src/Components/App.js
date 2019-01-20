@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import '../App.css';
 import MapContainer from './mapContainer.js'
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import ListDrawer from './ListDrawer.js';
+import { nominalTypeHack } from 'prop-types';
 class App extends Component {
   locations = [
     {
@@ -60,12 +62,42 @@ class App extends Component {
     lat: 44.85994 ,
     lon: -93.53345,
     zoom: 16,
-    allLocations: this.locations
+    allLocations: this.locations,
+    open: false
 }
+
+styles = {
+  menuButton: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    padding: 10,
+    backgroundColor: '#e74c3c',
+    border: 'none',
+    width: '5rem',
+    height: '5rem'
+  },
+  hide: {
+    display: 'none'
+  },
+  header: {
+    marginTop: "0px"
+  }
+};
+
+toggleDrawer = () => {
+  this.setState({
+    open: !this.state.open
+  });
+}
+
   render() {
     return (
     <div className="App">
     <div>
+      <button onClick={this.toggleDrawer} style={this.styles.menuButton}>
+       <i className="fa fa-bars"></i>
+      </button>
       <h1>Chanhassen MN Stores</h1>
     </div>
       <MapContainer
@@ -73,6 +105,10 @@ class App extends Component {
       lon={this.state.lon}
       zoom={this.state.zoom}
       locations={this.state.allLocations}/>
+      <ListDrawer
+        locations={this.state.allLocations}
+        open={this.state.open}
+        toggleDrawer={this.toggleDrawer}/>
     </div>
       
     );

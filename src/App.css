@@ -11,3 +11,45 @@ h1 {
     text-align: center;
     margin: 1rem;
 }
+
+.list {
+    width: 19rem;
+}
+
+.filterEntry {
+    width: 13rem;
+    margin: 1.5rem .5rem;
+    font-size: 1rem;
+}
+
+.noBullets {
+    list-style-type: none;
+    padding: 0;
+}
+
+.listItem {
+    padding: .5rem;
+}
+
+.listButton {
+    background: transparent;
+    border: none;
+    color: black;
+    font-size: .8rem;
+    font-weight: bold;
+}
+
+.searchHeading {
+    text-align: center; 
+    margin: 0;
+    color: white;
+}
+
+.searchHeadingContainer {
+    background-color: #e74c3c;
+    padding: 2rem;
+}
+
+.fa-bars {
+   font-size: 1.5rem;
+}

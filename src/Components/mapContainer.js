@@ -138,15 +138,6 @@ class MapContainer extends Component {
                             src={amProps && amProps.images ? amProps.images.items[0].prefix + "100x100" + amProps.images.items[0].suffix : ""}
                         />
                     </div>
-                    
-                    {/* (amProps && amProps.images
-                        ? (<div><img
-                            alt={amProps.name}
-                            src={amProps.images.items[0].prefix + "100x100" + amProps.images.items}
-                        />
-                    </div>
-                    ) : "" } */}
-                    
                 </div>
             </InfoWindow>
             </Map>
