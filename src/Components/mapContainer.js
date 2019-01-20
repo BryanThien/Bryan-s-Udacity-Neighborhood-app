@@ -20,6 +20,26 @@ class MapContainer extends Component {
     componentDidMount() {
     }
 
+    componentWillReceiveProps = props => {
+        this.setState({firstDrop: false});
+
+        if (this.state.markers.length !== props.locations.length) {
+            this.closeInfoWindow();
+            this.updateMarkers(props.locations);
+            this.setState({activeMarker: null});
+
+            return;
+        }
+
+        if (!props.selectedIndex || (this.state.activeMarker && 
+            (this.state.markers[props.selectedIndex] !== this.state.activeMarker))) {
+                this.closeInfoWindow();
+            }
+
+        if (props.selectedIndex === null || typeof(props.selectedIndex) === "undefined") {
+            return;
+        };
+    }
 
 // sets up map object and starts updateMarkers function to fill state with place data   
     mapReady = (props, map) => {
@@ -33,7 +53,6 @@ class MapContainer extends Component {
     }}
 
     getBusinessInfo = (props, data) => {
-        console.log(data.data.response.venues);
         return data
             .data
             .response
@@ -49,13 +68,11 @@ class MapContainer extends Component {
         let activeMarkerProps;
 
         axios.get(`https://api.foursquare.com/v2/venues/search?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}&radius=100&ll=${props.position.lat},${props.position.lng}`).then(result => {
-                console.log(result);
                 let restaurant = this.getBusinessInfo(props, result);
                 activeMarkerProps = {
                     ...props,
                     foursquare: restaurant[0]
                 };
-        console.log(activeMarkerProps.foursquare);
                 if (activeMarkerProps.foursquare) {
                     let url = `https://api.foursquare.com/v2/venues/${restaurant[0].id}/photos?client_id=${fsClientId}&client_secret=${fsClientSecret}&v=${fsVersion}`;
                     axios.get(url)

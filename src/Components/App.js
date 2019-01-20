@@ -63,7 +63,15 @@ class App extends Component {
     lon: -93.53345,
     zoom: 16,
     allLocations: this.locations,
-    open: false
+    open: false,
+    filtered: null
+}
+
+componentDidMount = () => {
+  this.setState({
+    ...this.state,
+    filtered: this.filterLocations(this.state.allLocations, "")
+  });
 }
 
 styles = {
@@ -91,6 +99,18 @@ toggleDrawer = () => {
   });
 }
 
+updateQuery = (query) => {
+  this.setState({
+    ...this.state,
+    selectedIndex: null,
+    filtered: this.filterLocations(this.state.allLocations, query)
+  });
+}
+
+filterLocations = (locations, query) => {
+  return locations.filter(location => location.name.toLowerCase().includes(query.toLowerCase()));
+}
+
   render() {
     return (
     <div className="App">
@@ -100,15 +120,16 @@ toggleDrawer = () => {
       </button>
       <h1>Chanhassen MN Stores</h1>
     </div>
-      <MapContainer
+    <MapContainer
       lat={this.state.lat}
       lon={this.state.lon}
       zoom={this.state.zoom}
-      locations={this.state.allLocations}/>
-      <ListDrawer
-        locations={this.state.allLocations}
+      locations={this.state.filtered}/>
+    <ListDrawer
+        locations={this.state.filtered}
         open={this.state.open}
-        toggleDrawer={this.toggleDrawer}/>
+        toggleDrawer={this.toggleDrawer}
+        filterLocations={this.updateQuery}/>
     </div>
       
     );
