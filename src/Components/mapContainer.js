@@ -118,6 +118,8 @@ class MapContainer extends Component {
         return (
         <div style={style}>
             <Map 
+            role="application"
+            aria-label="map"
             google={this.props.google} 
             onReady={this.mapReady}
             onClick={this.closeInfoWindow}

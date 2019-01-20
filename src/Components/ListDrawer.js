@@ -23,7 +23,7 @@ render = () => {
                     <input
                         className="filterEntry"
                         type="text"
-                        placeholder="filterList"
+                        placeholder="Filter list"
                         name="filter"
                         onChange={e => this.updateQuery(e.target.value)}
                         value={this.state.query}/>
