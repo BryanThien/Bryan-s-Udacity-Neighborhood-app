@@ -35,7 +35,7 @@ render = () => {
                                 .map((location, index) => {
                                     return (
                                         <li className="listItem" key={index}>
-                                            <button className="listButton" key={index}>{location.name}</button>
+                                            <button className="listButton" key={index} onClick={e => this.props.clickItem(index)}>{location.name}</button>
                                         </li>)                                   
                                 })
                             }

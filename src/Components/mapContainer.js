@@ -17,28 +17,28 @@ class MapContainer extends Component {
         showingInfoWindow: false
     };
 
-    componentDidMount() {
-    }
 
-    componentWillReceiveProps = props => {
+    componentWillReceiveProps = (props) => {
         this.setState({firstDrop: false});
 
         if (this.state.markers.length !== props.locations.length) {
             this.closeInfoWindow();
             this.updateMarkers(props.locations);
             this.setState({activeMarker: null});
-
             return;
         }
 
         if (!props.selectedIndex || (this.state.activeMarker && 
             (this.state.markers[props.selectedIndex] !== this.state.activeMarker))) {
                 this.closeInfoWindow();
+                
             }
 
         if (props.selectedIndex === null || typeof(props.selectedIndex) === "undefined") {
             return;
         };
+        console.log(this.state.markerProps[props.selectedIndex], this.state.markers[props.selectedIndex])
+        this.onMarkerClick(this.state.markerProps[props.selectedIndex], this.state.markers[props.selectedIndex]);
     }
 
 // sets up map object and starts updateMarkers function to fill state with place data   

@@ -107,6 +107,10 @@ updateQuery = (query) => {
   });
 }
 
+clickItem = (index) => {
+  this.setState({ selectedIndex: index, open: !this.state.open})
+}
+
 filterLocations = (locations, query) => {
   return locations.filter(location => location.name.toLowerCase().includes(query.toLowerCase()));
 }
@@ -124,12 +128,15 @@ filterLocations = (locations, query) => {
       lat={this.state.lat}
       lon={this.state.lon}
       zoom={this.state.zoom}
-      locations={this.state.filtered}/>
+      locations={this.state.filtered}
+      clickItem={this.clickItem}
+      selectedIndex={this.state.selectedIndex}/>
     <ListDrawer
         locations={this.state.filtered}
         open={this.state.open}
         toggleDrawer={this.toggleDrawer}
-        filterLocations={this.updateQuery}/>
+        filterLocations={this.updateQuery}
+        clickItem={this.clickItem}/>
     </div>
       
     );
