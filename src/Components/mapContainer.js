@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios';
+import ErrorHandle from './ErrorHandle.js';
 
 const map_key = 'AIzaSyCKnu3YbAv8wC4wOoZZvx8n4zSrvpxggjk';
 const fsClientId = 'K4XTXBKQ5I2AUZPYHSK1BUWR5KNVR0RCHE1AIVEZT1LPFX2S';
@@ -166,6 +167,6 @@ class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: map_key
+    apiKey: map_key, LoadingContainer: ErrorHandle
 })(MapContainer)
 
