@@ -3,7 +3,7 @@ import '../App.css';
 import MapContainer from './mapContainer.js'
 // import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import ListDrawer from './ListDrawer.js';
-import { nominalTypeHack } from 'prop-types';
+
 class App extends Component {
   locations = [
     {
@@ -67,6 +67,7 @@ class App extends Component {
     filtered: null
 }
 
+// holds filtered state until filtered
 componentDidMount = () => {
   this.setState({
     ...this.state,
@@ -93,12 +94,13 @@ styles = {
   }
 };
 
+// Toggles drawer state back and forth between true and false to open and close drawer
 toggleDrawer = () => {
   this.setState({
     open: !this.state.open
   });
 }
-
+// Places filtered array into the filterd state
 updateQuery = (query) => {
   this.setState({
     ...this.state,
@@ -106,11 +108,12 @@ updateQuery = (query) => {
     filtered: this.filterLocations(this.state.allLocations, query)
   });
 }
-
+// Changes selectedIndex state to the currently clicked "location list item" and then closes drawer
 clickItem = (index) => {
   this.setState({ selectedIndex: index, open: !this.state.open})
 }
 
+// filters locations names by the query passed in and returns 
 filterLocations = (locations, query) => {
   return locations.filter(location => location.name.toLowerCase().includes(query.toLowerCase()));
 }
@@ -118,12 +121,12 @@ filterLocations = (locations, query) => {
   render() {
     return (
     <div className="App">
-    <div>
+    <header>
       <button onClick={this.toggleDrawer} style={this.styles.menuButton}>
        <i className="fa fa-bars"></i>
       </button>
-      <h1>Chanhassen MN Stores</h1>
-    </div>
+      <h1>Chanhassen MN Restaurants</h1>
+    </header>
     <MapContainer
       lat={this.state.lat}
       lon={this.state.lon}

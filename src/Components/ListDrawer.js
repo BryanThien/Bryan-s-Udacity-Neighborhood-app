@@ -6,17 +6,21 @@ class ListDrawer extends Component {
         open: false,
         query: ""
     }
-
+// takes in query searched by user and sends it to filter the location list items
     updateQuery = (newQuery) => {
         this.setState({query: newQuery});
         this.props.filterLocations(newQuery);
     }
 
+    
 
 render = () => {
+    const drawerStyle = {
+        width: '1rem'
+    };
     return (
         <div>
-            <Drawer open={this.props.open} onClose={this.props.toggleDrawer}>
+            <Drawer style={drawerStyle}className ="drawer" open={this.props.open} onClose={this.props.toggleDrawer}>
                 <div className="list">
                 <div className="searchHeadingContainer">
                     <h3 className="searchHeading">Chanhassen Restaruant Location Search</h3>

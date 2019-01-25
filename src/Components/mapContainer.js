@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import {Map, InfoWindow,GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios';
 import ErrorHandle from './ErrorHandle.js';
 
@@ -18,7 +18,8 @@ class MapContainer extends Component {
         showingInfoWindow: false
     };
 
-
+    // updates the state values with new props values whenever any change happens to props values
+    // Handles what should be state updated, closed and fetched when prop values change
     componentWillReceiveProps = (props) => {
         this.setState({firstDrop: false});
 
@@ -38,7 +39,6 @@ class MapContainer extends Component {
         if (props.selectedIndex === null || typeof(props.selectedIndex) === "undefined") {
             return;
         };
-        console.log(this.state.markerProps[props.selectedIndex], this.state.markers[props.selectedIndex])
         this.onMarkerClick(this.state.markerProps[props.selectedIndex], this.state.markers[props.selectedIndex]);
     }
 
@@ -61,9 +61,9 @@ class MapContainer extends Component {
             .filter(item => item.name.includes(props.name) || props.name.includes(item.name));
     }
 
-
+// Closes any open info window, Fetches image from foursquare changes states to communicate a marker is open.
     onMarkerClick = (props, marker, event) => {
-        // Closes any info windows open
+        
         this.closeInfoWindow();
         
         let activeMarkerProps;
@@ -93,7 +93,7 @@ class MapContainer extends Component {
 
         this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps: props});
     }
-    
+    // Processes and creates location markers for the map
     updateMarkers = (allLocations) => {
         if (!allLocations)
         return;
@@ -157,6 +157,7 @@ class MapContainer extends Component {
                             alt={amProps && amProps.images ? amProps.name + " food picture" : ""}
                             src={amProps && amProps.images ? amProps.images.items[0].prefix + "100x100" + amProps.images.items[0].suffix : ""}
                         />
+                        <h3>{amProps && amProps.images ? "Image from Foursquare" : null}</h3>
                     </div>
                 </div>
             </InfoWindow>

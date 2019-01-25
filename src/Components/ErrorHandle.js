@@ -10,7 +10,7 @@ class ErrorHandle extends Component {
         const timeout = window.setTimeout(this.showMessage, 1000);
         this.setState({timeout});
     }
-
+    // To avoid memory leak
     componentWillUnmount = () => {
         window.clearTimeout(this.state.timeout);
     }
