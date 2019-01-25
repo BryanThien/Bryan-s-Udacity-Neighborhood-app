@@ -1,7 +1,4 @@
 
-
-In the project directory, you can run:
-
 ## `Install`
 Click the green "Clone or download" button in the top right
 Click "Download ZIP" and unzip the file once downloaded 
