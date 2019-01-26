@@ -12,6 +12,12 @@ It should automatically open. If not, Open [http://localhost:3000](http://localh
 The page will reload if you make edits.<br>
 You will also see any lint errors in the console.
 
+## `How to use`
+This is an application that focuses on restuarants near the center of Chanhassen MN. You can click on markers to show restaurant info. You can search and filter what restaurants you want to see on the map by clicking the hamburger stack icon in the top left. Then just click on the desired restuarant and it will bring you to the location on the map and open it's information.
+
+
+# Developers
+
 ## `npm test`
 
 Launches the test runner in the interactive watch mode.<br>
@@ -29,5 +35,6 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
 
 

@@ -49,9 +49,9 @@ class MapContainer extends Component {
     }
 
     closeInfoWindow = () => {
-        if (this.state.activeMarker && this.state.activeMarker) {
+        this.state.activeMarker && this.state.activeMarker.setAnimation(null); 
         this.setState({showingInfoWindow: false, activeMarkerProps: null, activeMarker: null});
-    }}
+    }
 
     getBusinessInfo = (props, data) => {
         return data
@@ -83,9 +83,12 @@ class MapContainer extends Component {
                                 images: result.data.response.photos
                             };
                             if (this.state.activeMarker)
+                                this.state.activeMarker.setAnimation(null);
+                                marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
                                 this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps})
                         })
                 } else {
+                    marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
                     this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps})
                 }
             })
@@ -109,10 +112,11 @@ class MapContainer extends Component {
                 address: location.fullAddress
             };
             markerProps.push(mProps);
-
+            let animation = this.props.google.maps.Animation.DROP;
             let marker = new this.props.google.maps.Marker({
                 position: location.location,
-                map: this.state.map
+                map: this.state.map,
+                animation
             });
             marker.addListener('click', () => {
                 this.onMarkerClick(mProps, marker, null);
