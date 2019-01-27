@@ -21,12 +21,14 @@ class MapContainer extends Component {
     // updates the state values with new props values whenever any change happens to props values
     // Handles what should be state updated, closed and fetched when prop values change
     componentWillReceiveProps = (props) => {
+        // Makes it so the original markers don't keep dropping over and over
         this.setState({firstDrop: false});
 
         if (this.state.markers.length !== props.locations.length) {
             this.closeInfoWindow();
             this.updateMarkers(props.locations);
             this.setState({activeMarker: null});
+
             return;
         }
 

@@ -20,7 +20,7 @@ render = () => {
     };
     return (
         <div>
-            <Drawer style={drawerStyle}className ="drawer" open={this.props.open} onClose={this.props.toggleDrawer}>
+            <Drawer style={drawerStyle} open={this.props.open} onClose={this.props.toggleDrawer}>
                 <div className="list">
                 <div className="searchHeadingContainer">
                     <h3 className="searchHeading">Chanhassen Restaruant Location Search</h3>
