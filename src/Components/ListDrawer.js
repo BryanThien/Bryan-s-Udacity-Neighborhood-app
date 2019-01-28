@@ -25,13 +25,17 @@ render = () => {
                 <div className="searchHeadingContainer">
                     <h3 className="searchHeading">Chanhassen Restaruant Location Search</h3>
                 </div>
+                <label for="filter">Search:</label>
                     <input
+                        aria-label="Search"
                         className="filterEntry"
                         type="text"
                         placeholder="Filter list"
+                        id="filter"
                         name="filter"
                         onChange={e => this.updateQuery(e.target.value)}
                         value={this.state.query}/>
+                        <div className = "searchListContainer">
                         <ul className="noBullets">
                             {this.props.locations && this
                                 .props
@@ -44,6 +48,7 @@ render = () => {
                                 })
                             }
                     </ul>
+                    </div>
                 </div>
             </Drawer>
         </div>
