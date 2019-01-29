@@ -93,7 +93,7 @@ class MapContainer extends Component {
                     marker.setAnimation(this.props.google.maps.Animation.BOUNCE);
                     this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps})
                 }
-            })
+            }).catch((err) => {alert(err + ' occured')})
 
 
         this.setState({showingInfoWindow: true, activeMarker: marker, activeMarkerProps: props});

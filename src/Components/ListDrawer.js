@@ -25,9 +25,10 @@ render = () => {
                 <div className="searchHeadingContainer">
                     <h3 className="searchHeading">Chanhassen Restaruant Location Search</h3>
                 </div>
-                <label for="filter">Search:</label>
+                <label htmlFor="filter" id="searchLabel">Search:</label>
                     <input
                         aria-label="Search"
+                        aria-labelledby="searchLabel"
                         className="filterEntry"
                         type="text"
                         placeholder="Filter list"
@@ -42,8 +43,8 @@ render = () => {
                                 .locations
                                 .map((location, index) => {
                                     return (
-                                        <li className="listItem" key={index}>
-                                            <button className="listButton" key={index} onClick={e => this.props.clickItem(index)}>{location.name}</button>
+                                        <li aria-labelledby="Button" className="listItem" key={index}>
+                                            <button className="listButton" id="Button" key={index} onClick={e => this.props.clickItem(index)}>{location.name}</button>
                                         </li>)                                   
                                 })
                             }

@@ -7,7 +7,7 @@ class ErrorHandle extends Component {
     }
 
     componentDidMount = () => {
-        const timeout = window.setTimeout(this.showMessage, 1000);
+        let timeout = window.setTimeout(this.showMessage, 1000);
         this.setState({timeout});
     }
     // To avoid memory leak
@@ -22,14 +22,15 @@ class ErrorHandle extends Component {
     render = () => {
         return (
             <div>
-                {this.state.show ? (
+                {this.state.show 
+                ? (
                 <div>
                     <h1>Error</h1>
                     <p> Couldn't load map due to a network error. </p>
-                </div>)
+                </div>
+                )
             : (<div><h1>Loading</h1></div>)    
-            }
-            </div>
+            } </div>
         )
     }
 }
