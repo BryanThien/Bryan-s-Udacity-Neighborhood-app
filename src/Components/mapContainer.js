@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow,GoogleApiWrapper} from 'google-maps-react';
 import axios from 'axios';
-import ErrorHandle from './ErrorHandle.js';
+import ErrorBoundary from './ErrorHandle.js';
+
 
 const map_key = 'AIzaSyCKnu3YbAv8wC4wOoZZvx8n4zSrvpxggjk';
 const fsClientId = 'K4XTXBKQ5I2AUZPYHSK1BUWR5KNVR0RCHE1AIVEZT1LPFX2S';
@@ -16,7 +17,7 @@ class MapContainer extends Component {
         activeMarker: null,
         activeMarkerProps: null,
         showingInfoWindow: false
-    };
+    }
 
     // updates the state values with new props values whenever any change happens to props values
     // Handles what should be state updated, closed and fetched when prop values change
@@ -49,7 +50,7 @@ class MapContainer extends Component {
         this.setState({map});
         this.updateMarkers(this.props.locations);
     }
-
+    
     closeInfoWindow = () => {
         this.state.activeMarker && this.state.activeMarker.setAnimation(null); 
         this.setState({showingInfoWindow: false, activeMarkerProps: null, activeMarker: null});
@@ -141,6 +142,7 @@ class MapContainer extends Component {
         
         return (
         <div style={style}>
+        <ErrorBoundary>
             <Map 
             role="application"
             aria-label="map"
@@ -168,12 +170,11 @@ class MapContainer extends Component {
                 </div>
             </InfoWindow>
             </Map>
+        </ErrorBoundary>
         </div>
         );
   }
 }
 
-export default GoogleApiWrapper({
-    apiKey: map_key, LoadingContainer: ErrorHandle
-})(MapContainer)
+export default GoogleApiWrapper({apiKey: map_key})(MapContainer)
 

@@ -1,38 +1,35 @@
 import React, {Component} from 'react';
 
-class ErrorHandle extends Component {
+class ErrorBoundary extends Component {
     state = {
-        show: false,
-        timeout: null
-    }
-
-    componentDidMount = () => {
-        let timeout = window.setTimeout(this.showMessage, 1000);
-        this.setState({timeout});
-    }
-    // To avoid memory leak
-    componentWillUnmount = () => {
-        window.clearTimeout(this.state.timeout);
-    }
-
-    showMessage = () => {
-        this.setState({show: true});
-    }
-
-    render = () => {
-        return (
+          error: null,
+          errorInfo: null
+        };
+      
+      componentDidCatch(error, errorInfo) {
+        // Catch errors in any child components and re-renders with an error message
+        
+        this.setState({
+          error: error,
+          errorInfo: errorInfo
+        });
+      }
+    
+      render() {
+        if (this.state.error) {
+          // Fallback UI if an error occurs
+          return (
             <div>
-                {this.state.show 
-                ? (
-                <div>
-                    <h1>Error</h1>
-                    <p> Couldn't load map due to a network error. </p>
-                </div>
-                )
-            : (<div><h1>Loading</h1></div>)    
-            } </div>
-        )
+              <h2>Something Went wrong</h2>
+              <p>
+                {this.state.error && this.state.error.toString()}
+              </p>
+            </div>
+          );
+        }
+        // component normally just renders children
+        return this.props.children;
+      }
     }
-}
 
-export default ErrorHandle
+export default ErrorBoundary

@@ -3,6 +3,7 @@ import '../App.css';
 import MapContainer from './mapContainer.js'
 // import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import ListDrawer from './ListDrawer.js';
+// import ErrorBoundary from './ErrorHandle.js';
 
 class App extends Component {
   locations = [
@@ -64,7 +65,11 @@ class App extends Component {
     zoom: 16,
     allLocations: this.locations,
     open: false,
-    filtered: null
+    filtered: null,
+}
+
+showMapToggle = () => {
+  this.setState({showMap: false});
 }
 
 // holds filtered state until filtered
@@ -127,7 +132,7 @@ filterLocations = (locations, query) => {
       </button>
       <h1>Chanhassen MN Restaurants</h1>
     </header>
-    <MapContainer
+      <MapContainer
       lat={this.state.lat}
       lon={this.state.lon}
       zoom={this.state.zoom}
